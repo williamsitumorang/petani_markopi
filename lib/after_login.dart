@@ -1,27 +1,63 @@
 import 'package:flutter/material.dart';
+import 'login.dart';
 import 'package:petani/kedaikopi.dart';
 import 'package:petani/komunitas_petani.dart';
-import 'package:petani/login.dart';
 import 'package:petani/panen.dart';
 import 'package:petani/pascapanen.dart';
 import 'package:petani/penjualan.dart';
 import 'budidaya.dart';
+import 'verifikasi.dart';
 
-void main() {
-  runApp(MyApp());
-}
+class SuccessPage extends StatelessWidget {
+  final User user;
 
-class MyApp extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: MainScreen(),
-    );
+  SuccessPage({required this.user});
+
+  void logout(BuildContext context) {
+    // Tambahkan logika logout di sini, seperti membersihkan data pengguna, kembali ke halaman login, dll.
+    Navigator.popUntil(context,
+        ModalRoute.withName('/')); // Kembali ke halaman utama (main.dart)
   }
-}
 
-class MainScreen extends StatelessWidget {
+  // @override
+  // Widget build(BuildContext context) {
+  //   return Scaffold(
+  //     appBar: AppBar(
+  //       title: Text('Markopi'),
+  //       backgroundColor: Color(0xFF65451F),
+  //       leading: Builder(
+  //         builder: (context) => IconButton(
+  //           icon: Icon(Icons.menu),
+  //           onPressed: () {
+  //             // Buka drawer saat ikon menu diklik
+  //             Scaffold.of(context).openDrawer();
+  //           },
+  //         ),
+  //       ),
+  //     ),
+
+  //     body: Center(
+  //       child: Column(
+  //         mainAxisAlignment: MainAxisAlignment.center,
+  //         children: [
+  //           Text('Selamat! Anda berhasil login.'),
+  //           Text('Username: ${user.username}'),
+  //           Text('Email: ${user.email}'),
+  //           Text('ID: ${user.id}'),
+  //           Text('Token: ${user.token}'),
+  //           SizedBox(height: 20),
+  //           ElevatedButton(
+  //             onPressed: () {
+  //               // Panggil fungsi logout saat tombol ditekan
+  //               logout(context);
+  //             },
+  //             child: Text('Logout'),
+  //           ),
+  //         ],
+  //       ),
+  //     ),
+  //   );
+  // }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -47,7 +83,7 @@ class MainScreen extends StatelessWidget {
                 color: Color(0xFF65451F),
               ),
               child: Text(
-                'Markopi',
+                'Welcome ${user.username}',
                 style: TextStyle(
                   color: Colors.white,
                   fontSize: 24,
@@ -109,13 +145,22 @@ class MainScreen extends StatelessWidget {
               },
             ),
             ListTile(
-              title: Text('Login'),
+              title: Text('Pengajuan Akun'),
               onTap: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => LoginPage()),
+                  MaterialPageRoute(builder: (context) => VerifikasiPage()),
                 );
               },
+            ),
+            ListTile(
+              title: ElevatedButton(
+                onPressed: () {
+                  // Panggil fungsi logout saat tombol ditekan
+                  logout(context);
+                },
+                child: Text('Logout'),
+              ),
             ),
           ],
         ),
